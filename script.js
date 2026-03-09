@@ -324,16 +324,7 @@ function buildReport({ partial = false } = {}) {
   const totalInModule = currentModule.cards.length;
   const answered = answersLog.length;
   const correctCount = answersLog.filter((a) => a.correct).length;
-
-  const correctList = answersLog
-    .filter((a) => a.correct)
-    .map((a) => `- ${a.index + 1}: ${a.question}`)
-    .join("\n");
-
-  const wrongList = answersLog
-    .filter((a) => !a.correct)
-    .map((a) => `- ${a.index + 1}: ${a.question}`)
-    .join("\n");
+  const wrongCount = answered - correctCount;
 
   const statusLine = partial
     ? `⚠️ Занятие прервано (${answered} из ${totalInModule} карточек)`
@@ -346,10 +337,8 @@ function buildReport({ partial = false } = {}) {
     `🕒 Начало: ${sessionStartTime.toLocaleString("ru-RU")}`,
     `⏳ Длительность: ${minutes} мин ${seconds} сек`,
     `✅ Правильных: ${correctCount} из ${answered}`,
+    `❌ Ошибок: ${wrongCount}`,
   ];
-
-  if (correctList) lines.push("", "Правильные:", correctList);
-  if (wrongList) lines.push("", "С ошибками:", wrongList);
 
   return lines.join("\n");
 }
