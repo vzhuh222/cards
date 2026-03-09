@@ -546,12 +546,12 @@ function initTeacherMode() {
 
 function sendToTelegram(text) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
-  const url =
-    `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage` +
-    `?chat_id=${encodeURIComponent(TELEGRAM_CHAT_ID)}` +
-    `&text=${encodeURIComponent(text)}`;
-  const img = new Image();
-  img.src = url;
+  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text }),
+  }).catch(() => {});
 }
 
 function sendToTelegramBeacon(text) {
