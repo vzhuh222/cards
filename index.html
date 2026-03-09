@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Карточки для запоминания</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>Карточки для запоминания</h1>
+      <p class="app-subtitle">Учитель настраивает модули, ученики только изучают</p>
+    </header>
+
+    <main class="app-main">
+      <section id="teacher-panel" class="card teacher-card hidden">
+        <div class="teacher-header">
+          <h2>Режим учителя</h2>
+          <p class="teacher-hint">Эта панель видна только по ссылке с параметром <code>?teacher=1</code>. Ученикам её не отправляем.</p>
+        </div>
+
+        <div class="form-row">
+          <label for="teacher-module-id">ID модуля (латиницей, без пробелов)</label>
+          <input id="teacher-module-id" type="text" placeholder="например, planimetry-basics-1" />
+        </div>
+
+        <div class="form-row">
+          <label for="teacher-module-title">Название модуля (как увидит ученик)</label>
+          <input id="teacher-module-title" type="text" placeholder="например, Планиметрия: базовые факты 1" />
+        </div>
+
+        <div class="form-row two-columns">
+          <div>
+            <label for="teacher-question">Вопрос (лицевая сторона)</label>
+            <textarea id="teacher-question" rows="3" placeholder="Напишите текст вопроса"></textarea>
+          </div>
+          <div>
+            <label for="teacher-answer">Ответ (оборот: текст)</label>
+            <textarea id="teacher-answer" rows="3" placeholder="Точный ответ текстом"></textarea>
+            <label for="teacher-answer-file" class="teacher-file-label">Или выберите файл картинки</label>
+            <input id="teacher-answer-file" type="file" accept="image/*" />
+          </div>
+        </div>
+
+        <div class="teacher-actions">
+          <button id="teacher-add-card-btn" class="btn secondary">Добавить карточку в модуль</button>
+          <span id="teacher-cards-count" class="teacher-cards-count">Карточек в модуле: 0</span>
+        </div>
+
+        <div class="form-row">
+          <label>Сгенерированный фрагмент для вставки в <code>MODULES</code> в <code>script.js</code></label>
+          <textarea id="teacher-output" class="teacher-output" rows="10" readonly></textarea>
+        </div>
+
+        <p class="teacher-note">
+          Скопируйте этот блок и вставьте его в массив <code>MODULES</code> в файле <code>script.js</code>.
+          Студенты будут видеть только итоговые карточки.
+        </p>
+      </section>
+
+      <section class="setup-card card">
+        <h2>Начало занятия</h2>
+        <div class="form-row">
+          <label for="student-name">Имя ученика</label>
+          <input id="student-name" type="text" placeholder="Введите имя" />
+        </div>
+        <div class="form-row">
+          <label for="module-select">Выберите модуль</label>
+          <select id="module-select">
+            <option value="">— выберите модуль —</option>
+          </select>
+        </div>
+        <button id="start-session-btn" class="btn primary" disabled>Начать занятие</button>
+      </section>
+
+      <section id="study-section" class="study-card card hidden">
+        <div class="study-header">
+          <div class="study-module" id="study-module-title"></div>
+          <div class="study-progress" id="study-progress"></div>
+        </div>
+
+        <div class="flashcard">
+          <div class="flashcard-side question-side">
+            <h3>Вопрос</h3>
+            <p id="question-text"></p>
+          </div>
+
+          <div class="flashcard-side answer-side">
+            <h3>Ответ</h3>
+            <div id="answer-content"></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="show-answer-btn" class="btn secondary">Показать ответ</button>
+          <div id="answer-actions" class="answer-actions hidden">
+            <span>Я ответил(а)</span>
+            <button id="btn-correct" class="btn success">Правильно</button>
+            <button id="btn-wrong" class="btn danger">Неправильно</button>
+          </div>
+        </div>
+
+        <div id="session-finished" class="session-finished hidden">
+          <p>Занятие завершено. Можно закрыть страницу или начать заново.</p>
+          <button id="restart-btn" class="btn">Начать заново</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <small>Модули карточек настраиваются только в коде сайта (раздел JavaScript).</small>
+    </footer>
+  </div>
+
+  <script src="illustrations.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
