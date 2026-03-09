@@ -547,11 +547,8 @@ function initTeacherMode() {
 function sendToTelegram(text) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
   const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-  fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text }),
-  }).catch(() => {});
+  const body = new URLSearchParams({ chat_id: TELEGRAM_CHAT_ID, text });
+  fetch(url, { method: "POST", body }).catch(() => {});
 }
 
 function sendToTelegramBeacon(text) {
